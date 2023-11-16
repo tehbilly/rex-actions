@@ -52,7 +52,6 @@ async function main() {
             libraries.set(k, typeof v === 'string' ? v : `${v}`);
         }
         const libraryNames = Array.from(libraries.keys());
-        (0, core_1.debug)(`Library names: ${libraryNames}`);
         const toUpdate = new Map();
         // Initialize the map with the libraries to update
         for (let lib of libraryNames) {
