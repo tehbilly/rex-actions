@@ -1,0 +1,17 @@
+name: 'Update NuGet Dependencies'
+description: 'Update specific nuget dependencies'
+author: 'William McGann <contact@williammcgann.com>'
+
+branding:
+  icon: 'hash'
+  color: 'blue'
+
+inputs:
+  libraries:
+    description: 'JSON-formatted list of dependencies where the keys are library names and the values are version'
+    required: true
+
+runs:
+  using: node20
+  pre: dist/pre/index.js
+  main: dist/main/index.js
