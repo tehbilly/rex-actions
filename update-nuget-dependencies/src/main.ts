@@ -42,7 +42,7 @@ export async function main(): Promise<void> {
       const readStream = fs.createReadStream(projFile);
       for await (const line of fileLines(readStream)) {
         for (let lib of libraryNames) {
-          if (line.includes(lib)) {
+          if (line.includes(`Include="${lib}"`)) {
             debug(`Found ${projFile} that references ${lib}`);
             toUpdate.get(lib)!.push(projFile);
           }

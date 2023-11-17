@@ -1,38 +1,33 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "0.0.0",
+  "name": "update-nuget-dependencies",
+  "description": "GitHub Action to update NuGet dependencies in a solution's projects file",
+  "version": "1.0.0",
   "author": "",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/cfacorp/rex-actions",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/cfacorp/rex-actions.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/cfacorp/rex-actions/issues"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "exports": {
-    ".": "./dist/index.js"
-  },
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "bundle": "npm run format:write && npm run package",
     "ci-test": "jest",
     "coverage": "make-coverage-badge --output-path ./badges/coverage.svg",
     "format:write": "prettier --write **/*.ts",
     "format:check": "prettier --check **/*.ts",
-    "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
-    "package": "npm run package:main && npm run package:pre",
-    "package:main": "ncc build src/main.ts -o dist/main --license licenses.txt",
-    "package:pre": "ncc build src/pre.ts -o dist/pre --license licenses.txt",
+    "lint": "npx eslint . -c .eslintrc.yml",
+    "package": "npm run package:main",
+    "package:main": "ncc build src/main.ts --license licenses.txt",
     "package:watch": "npm run package -- --watch",
     "test": "jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"

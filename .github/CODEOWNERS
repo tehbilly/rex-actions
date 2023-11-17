@@ -1,0 +1,6 @@
+# This file is used to add default reviewers for pull requests. Though
+# owners can be specified for certain areas of the code, our team does
+# not segment the work for this project in that way, so we use a wildcard
+# character to specify that everyone is a code owner of every file in the
+# project.
+* @anders-martin-cfa @cfacorp/rex-edge-services

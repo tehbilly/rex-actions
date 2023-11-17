@@ -13,5 +13,4 @@ inputs:
 
 runs:
   using: node20
-  pre: dist/pre/index.js
-  main: dist/main/index.js
+  main: dist/index.js
