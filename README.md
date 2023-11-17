@@ -17,7 +17,7 @@
 npm install
 ```
 
-2:white_check_mark: Run tests
+2. :white_check_mark: Run tests
 
 ```bash
 $ npm test
@@ -33,11 +33,12 @@ $ npm test
 ...
 ```
 
-3:building_construction: Package the TypeScript for distribution
+3. :building_construction: Package the actions for distribution
 
 ```bash
 npm run package
 ```
+
 
 ## Actions
 
@@ -92,8 +93,19 @@ jobs:
 ```
 </details>
 
-## Versioning
+## Releasing a new version
 
 After testing, you can create version tag(s) that developers can use to reference different stable versions of your
 action. For more information, see [Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 in the GitHub Actions toolkit.
+
+Once changes are merged into `main`, you can create a new version tag using the following commands:
+
+```shell
+# Create tag for version v1 -- this is the identifier used when referencing the action in a workflow
+# Use --force as the tag likely already exists 
+git tag v1 --force
+
+# Force push the tag to overwrite it, so consumers will get changes
+git push --tags --force
+```
