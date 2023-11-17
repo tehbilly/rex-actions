@@ -8,7 +8,7 @@
 > will be used to automatically switch to the correct version when you `cd` into the repository. Additionally, this
 > `.node-version` file is used by GitHub Actions in any `actions/setup-node` actions.
 > 
-> If you're using [Volta](https://volta.sh) there is no need to do anything, as it will automatically detect the correct
+> If you're using [Volta](https://volta.sh) there is no need to do anything, as it will handle obtaining and using the correct
 > version.
 
 1. :hammer_and_wrench: Install the dependencies
