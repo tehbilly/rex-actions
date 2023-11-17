@@ -6,7 +6,7 @@
  * variables following the pattern `INPUT_<INPUT_NAME>`.
  */
 
-import { resolve } from 'node:path'
+import { resolve } from 'node:path';
 
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
@@ -18,17 +18,17 @@ import { beforeEach, describe, it, jest } from '@jest/globals';
 const runMock = jest.spyOn(main, 'main');
 
 // Mock the GitHub Actions core library
-let errorMock: jest.Spied<typeof core.error> = jest.spyOn(core, 'error');
-let noticeMock: jest.Spied<typeof core.notice> = jest.spyOn(core, 'notice');
-let getInputMock: jest.Spied<typeof core.getInput> = jest.spyOn(core, 'getInput');
-let setFailedMock: jest.Spied<typeof core.setFailed> = jest.spyOn(core, 'setFailed');
-let setOutputMock: jest.Spied<typeof core.setOutput> = jest.spyOn(core, 'setOutput');
+const errorMock: jest.Spied<typeof core.error> = jest.spyOn(core, 'error');
+const noticeMock: jest.Spied<typeof core.notice> = jest.spyOn(core, 'notice');
+const getInputMock: jest.Spied<typeof core.getInput> = jest.spyOn(core, 'getInput');
+const setFailedMock: jest.Spied<typeof core.setFailed> = jest.spyOn(core, 'setFailed');
+const setOutputMock: jest.Spied<typeof core.setOutput> = jest.spyOn(core, 'setOutput');
 
 // Mock the GitHub Actions exec library
-let execMock: jest.Spied<typeof exec.exec> = jest.spyOn(exec, 'exec');
+const execMock: jest.Spied<typeof exec.exec> = jest.spyOn(exec, 'exec');
 
 // Mock the GitHub Actions io library
-let whichMock: jest.Spied<typeof io.which> = jest.spyOn(io, 'which');
+const whichMock: jest.Spied<typeof io.which> = jest.spyOn(io, 'which');
 
 describe('action', () => {
   beforeEach(() => {
@@ -169,7 +169,7 @@ describe('action', () => {
     expect(errorMock).toHaveBeenCalledTimes(1);
     expect(noticeMock).not.toHaveBeenCalled();
     expect(getInputMock).toHaveBeenCalledTimes(1);
-    expect(setFailedMock).toHaveBeenCalledTimes(1)
+    expect(setFailedMock).toHaveBeenCalledTimes(1);
     expect(setOutputMock).not.toHaveBeenCalled();
     // Even though both projects match, the action should fail after the first
     expect(execMock).toHaveBeenCalledTimes(1);

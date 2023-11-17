@@ -22,6 +22,10 @@ jobs:
   check-dist:
     name: Check dist/
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        workspace:
+          - update-nuget-dependencies
 
     steps:
       - name: Checkout
@@ -36,25 +40,17 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        run: npm ci
+        run: npm --workspace ${{ matrix.workspace }} ci
 
-      - name: Build dist/ Directory
-        id: build
-        run: npm run bundle
+      - name: Build dist/ for ${{ matrix.workspace }}
+        id: package
+        run: npm --workspace ${{ matrix.workspace }} run package
 
       - name: Compare Expected and Actual Directories
         id: diff
         run: |
-          if [ "$(git diff --ignore-space-at-eol --text dist/ | wc -l)" -gt "0" ]; then
+          if [ "$(git diff --ignore-space-at-eol --text ${{ matrix.workspace }}/dist/ | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build. See status below:"
-            git diff --ignore-space-at-eol --text dist/
+            git diff --ignore-space-at-eol --text ${{ matrix.workspace }}/dist/
             exit 1
           fi
-
-      # If index.js was different than expected, upload the expected version as
-      # a workflow artifact.
-      - uses: actions/upload-artifact@v3
-        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
-        with:
-          name: dist
-          path: dist/
