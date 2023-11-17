@@ -40,7 +40,7 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        run: npm --workspace ${{ matrix.workspace }} ci
+        run: npm ci
 
       - name: Build dist/ for ${{ matrix.workspace }}
         id: package
