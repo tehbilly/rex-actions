@@ -1,13 +1,7 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "outDir": "./dist",
-  },
+  "extends": "./tsconfig.base.json",
   "exclude": [
-    "./dist",
-    "./node_modules",
-    "./coverage"
+    "jest.config.ts",
+    "__tests__"
   ]
 }

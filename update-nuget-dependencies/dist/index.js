@@ -6450,30 +6450,32 @@ async function* fileLines(file) {
 async function main() {
     try {
         const libraries = new Map();
-        for (const [k, v] of Object.entries(JSON.parse((0, core_1.getInput)('libraries')))) {
+        const parsedInput = JSON.parse((0, core_1.getInput)('libraries'));
+        const entries = Object.entries(parsedInput);
+        for (const [k, v] of entries) {
             (0, core_1.debug)(`Updating library '${k}' with version '${v}'`);
             libraries.set(k, typeof v === 'string' ? v : `${v}`);
         }
         const libraryNames = Array.from(libraries.keys());
         const toUpdate = new Map();
         // Initialize the map with the libraries to update
-        for (let lib of libraryNames) {
+        for (const lib of libraryNames) {
             toUpdate.set(lib, []);
         }
         // Look for *.csproj files that reference one of these libraries
         for await (const projFile of (await (0, glob_1.create)('**/*.csproj')).globGenerator()) {
             const readStream = fs.createReadStream(projFile);
             for await (const line of fileLines(readStream)) {
-                for (let lib of libraryNames) {
+                for (const lib of libraryNames) {
                     if (line.includes(`Include="${lib}"`)) {
                         (0, core_1.debug)(`Found ${projFile} that references ${lib}`);
-                        toUpdate.get(lib).push(projFile);
+                        toUpdate.get(lib)?.push(projFile);
                     }
                 }
             }
         }
         let noUpdates = true;
-        for (let updates of toUpdate.values()) {
+        for (const updates of toUpdate.values()) {
             if (updates.length > 0) {
                 noUpdates = false;
                 break;
@@ -6487,16 +6489,14 @@ async function main() {
         const dotnetPath = await (0, io_1.which)('dotnet', true);
         // Update the libraries
         for (const [lib, projFiles] of toUpdate) {
-            (0, core_1.debug)(`Updating ${lib} in ${projFiles}`);
+            (0, core_1.debug)(`Updating ${lib} in ${JSON.stringify(projFiles)}`);
             for (const proj of projFiles) {
-                const exitCode = await (0, exec_1.exec)(`${dotnetPath}`, [
-                    'add',
-                    proj,
-                    'package',
-                    lib,
-                    '--version',
-                    libraries.get(lib),
-                ]);
+                const libVersion = libraries.get(lib);
+                if (libVersion === undefined) {
+                    (0, core_1.error)(`Could not find version for ${lib}`);
+                    continue;
+                }
+                const exitCode = await (0, exec_1.exec)(`${dotnetPath}`, ['add', proj, 'package', lib, '--version', libVersion]);
                 if (exitCode !== 0) {
                     (0, core_1.error)(`Error updating ${lib} in ${proj}`);
                     (0, core_1.setFailed)(`Error updating ${lib} in ${proj}`);
